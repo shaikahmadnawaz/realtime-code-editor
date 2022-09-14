@@ -9,6 +9,8 @@ const ACTIONS = require("./src/Actions");
 const server = http.createServer(app);
 // creating instance for server class
 const io = new Server(server);
+// We are storing mapping here in memory, by restarting server everything will be lost, if production level app we have to store in db,file etc
+
 const userSocketMap = {};
 function getAllConnectedClients(roomId) {
   // Map
@@ -38,6 +40,26 @@ io.on("connection", (socket) => {
         socketId: socket.id,
       });
     });
+  });
+  socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+    socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
+  });
+
+  socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
+    io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
+  });
+  // this is only called when the user closed browser or moved to another page
+  socket.on("disconnecting", () => {
+    // we are getting all rooms
+    const rooms = [...socket.rooms];
+    rooms.forEach((roomId) => {
+      socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
+        socketId: socket.id,
+        username: userSocketMap[socket.id],
+      });
+    });
+    delete userSocketMap[socket.id];
+    socket.leave();
   });
 });
 
