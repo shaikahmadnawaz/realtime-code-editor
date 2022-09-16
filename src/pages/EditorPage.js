@@ -6,6 +6,7 @@ import Editor from "../components/Editor";
 import { initSocket } from "../socket";
 import {
   useLocation,
+  //  It helps to go to the specific URL, forward or backward pages.
   useNavigate,
   Navigate,
   useParams,
@@ -24,6 +25,9 @@ const EditorPage = () => {
   // whenever the page re-renders the use rffect is called
   useEffect(() => {
     const init = async () => {
+      /* The keyword await makes JavaScript wait until 
+      that promise settles and returns its result. */
+      /** Whenever you use ref use current */
       // By calling this client/browser will connect with server
       socketRef.current = await initSocket();
       // We have to send error message to client if there is problem in connection
@@ -41,6 +45,9 @@ const EditorPage = () => {
       // by calling this user is coonected with sever
       socketRef.current.emit(ACTIONS.JOIN, {
         roomId,
+        // this is new js syntax it will not throw error if uNmae not found
+        // this is like a state that always returns your current URL.
+        // If the URL is changed, the useLocation will be updated as well.
         // location is used to get username from state
         //  ? this will not give error if we did username
         username: location.state?.username,

@@ -1,13 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import Codemirror from "codemirror";
+/* To enable theme we have import this css file
+which is present in node modules */
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/dracula.css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
+/* To enable mode we have import this javascript file
+which is present in node modules */
 import ACTIONS from "../Actions";
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
+  // initializing code editor
   useEffect(() => {
     async function init() {
       //   These are methods present in code mirror package
@@ -47,7 +52,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       });
     }
   }, [socketRef.current]);
-
+  /* we connect code mirror with our text area so that it will convert ta in fully featured editor */
   return <textarea id="realtimeEditor"></textarea>;
 };
 

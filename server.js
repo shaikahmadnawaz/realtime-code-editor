@@ -29,6 +29,7 @@ io.on("connection", (socket) => {
   console.log("socket connected", socket.id);
   // server listening that is emitted by client
   socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
+    // We are storing unique IDs with userNames in browser itself
     userSocketMap[socket.id] = username;
     socket.join(roomId);
     // if already user present and getting new ids also
