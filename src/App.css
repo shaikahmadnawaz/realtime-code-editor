@@ -1,8 +1,11 @@
 .homePageWrapper {
   display: flex;
+  /* flex box properties */
   align-items: center;
   justify-content: center;
   color: #fff;
+  /* 1vh = 1% of viewport height
+     By making height full screen the all content will be now at center of screen */
   height: 100vh;
 }
 
@@ -78,6 +81,7 @@ footer a {
 
 .createNewBtn {
   color: #4aed88;
+  /* text deco none is used to remove underline */
   text-decoration: none;
   border-bottom: 1px solid #4aed88;
   transition: all 0.3s ease-in-out;
@@ -91,13 +95,19 @@ footer a:hover {
 
 .mainWrap {
   display: grid;
+  /* The grid-template-columns property specifies the 
+    number (and the widths) of columns in a grid layout. */
   grid-template-columns: 230px 1fr;
+  /*  Fr is a fractional unit and 
+    1fr is for 1 part of the available space. */
 }
 
 .aside {
   background: #1c1e29;
   padding: 16px;
   color: #fff;
+  /* Here flex is used so that 
+  buttons can be pushed to down */
   display: flex;
   flex-direction: column;
 }
@@ -108,6 +118,7 @@ footer a:hover {
 .clientsList {
   display: flex;
   align-items: center;
+  /* it gives new line if content dosent fit in current line */
   flex-wrap: wrap;
   gap: 20px;
 }
