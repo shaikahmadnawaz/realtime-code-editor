@@ -1,4 +1,5 @@
 {
+  "homepage": "https://sanawaz1080.github.io/realtime-code-editor",
   "name": "realtime-editor",
   "version": "0.1.0",
   "private": true,
@@ -20,6 +21,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start:front": "react-scripts start",
     "start": "npm run build && npm run server:prod",
     "build": "react-scripts build",
@@ -47,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "nodemon": "^2.0.19"
   }
 }
