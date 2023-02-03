@@ -15,8 +15,13 @@ const io = new Server(server);
 // Whenever we get request to build then automatically it calls index.js in build/static it is built and displayed in browser
 app.use(express.static("build"));
 // We are saying to the serverv that whatever request we get server them index.html
+app.use(express.static(path.resolve(__dirname, "./build")));
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./build", "index.html"));
 });
 
 const userSocketMap = {};
