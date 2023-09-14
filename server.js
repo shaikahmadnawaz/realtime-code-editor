@@ -4,25 +4,38 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const http = require("http");
+const cors = require("cors");
 // importing socket
 const { Server } = require("socket.io");
 const ACTIONS = require("./src/Actions");
 const server = http.createServer(app);
+
 // creating instance for server class
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+    transports: ["websocket", "polling"],
+    credentials: true,
+  },
+  allowEIO3: true,
+});
+
+app.use(cors());
+
 // We are storing mapping here in memory, by restarting server everything will be lost, if production level app we have to store in db,file etc
 
 // Whenever we get request to build then automatically it calls index.js in build/static it is built and displayed in browser
-app.use(express.static("build"));
+// app.use(express.static("build"));
 // We are saying to the serverv that whatever request we get server them index.html
-app.use(express.static(path.resolve(__dirname, "./build")));
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+// app.use(express.static(path.resolve(__dirname, "./build")));
+// app.use((req, res, next) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./build", "index.html"));
+// });
 
 const userSocketMap = {};
 function getAllConnectedClients(roomId) {
