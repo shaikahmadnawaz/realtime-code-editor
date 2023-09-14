@@ -2,7 +2,7 @@
 const express = require("express");
 // calling express
 const app = express();
-const path = require("path");
+// const path = require("path");
 const http = require("http");
 const cors = require("cors");
 // importing socket
@@ -14,14 +14,16 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST"],
-    transports: ["websocket", "polling"],
     credentials: true,
   },
-  allowEIO3: true,
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 // We are storing mapping here in memory, by restarting server everything will be lost, if production level app we have to store in db,file etc
 
